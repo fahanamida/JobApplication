@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_URL = "http://localhost:3001/jobs"; // ✅ JSON Server port
+const API_URL = "/api/jobs";
 
 export const fetchJobs = createAsyncThunk("jobs/fetchJobs", async () => {
   const res = await axios.get(API_URL);
@@ -20,13 +20,13 @@ export const addJob = createAsyncThunk("jobs/addJob", async (job) => {
 export const updateJob = createAsyncThunk(
   "jobs/updateJob",
   async ({ id, data }) => {
-    const res = await axios.put(`${API_URL}/${id}`, data);
+    axios.put(`${API_URL}?id=${id}`, data);;
     return res.data;
   }
 );
 
 export const deleteJob = createAsyncThunk("jobs/deleteJob", async (id) => {
-  await axios.delete(`${API_URL}/${id}`);
+  axios.delete(`${API_URL}?id=${id}`);
   return id;
 });
 
